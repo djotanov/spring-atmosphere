@@ -1,0 +1,42 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.3.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'spring-boot'
+
+jar {
+    baseName = 'spring-atmosphere'
+    version =  '0.0.1-SNAPSHOT'
+}
+
+repositories {
+    mavenCentral()
+}
+
+configurations.all {
+    resolutionStrategy {
+        eachDependency {
+            if (it.requested.group == 'org.apache.tomcat.embed') {
+                it.useVersion '7.0.59'
+            }
+        }
+    }
+}
+dependencies {
+    compile("javax.inject:javax.inject:1")
+    compile("org.springframework.boot:spring-boot-starter-web:1.2.3.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-security:1.2.3.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf:1.2.3.RELEASE")
+    compile("org.atmosphere:atmosphere-runtime:2.3.1")
+    compile("org.atmosphere:atmosphere-spring:2.3.0")
+    compile("com.fasterxml.jackson.core:jackson-core:2.4.5")
+    compile("com.fasterxml.jackson.core:jackson-databind:2.4.5")
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+}
